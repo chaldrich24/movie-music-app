@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import {AntDesign} from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
 import ProfileScreen from "./screens/ProfileScreen";
 
@@ -24,11 +24,24 @@ function ProfileStackScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  return <NavigationContainer style={styles.container}>
-    <Tab.Navigator>
-      <Tab.Screen name='ProfileStack' component={ProfileStackScreen} options={{headerShown: false, title: 'Profile', tabBarIcon: () => <AntDesign name="profile" size={22} color='black' />}} />
-    </Tab.Navigator>
-  </NavigationContainer>;
+  return (
+    <NavigationContainer style={styles.container}>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="ProfileStack"
+          component={ProfileStackScreen}
+          options={{
+            headerShown: false,
+            title: "Profile",
+            tabBarIcon: () => (
+              <Ionicons name="person-circle-outline" size={22} color="black" />
+            ),
+            tabBarActiveTintColor: 'black'
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 }
 
 const styles = StyleSheet.create({
