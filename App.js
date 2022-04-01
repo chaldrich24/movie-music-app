@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -10,6 +10,7 @@ import * as Font from 'expo-font'
 import AppLoading from "expo-app-loading";
 
 import ProfileScreen from "./screens/ProfileScreen";
+import FeedScreen from "./screens/FeedScreen";
 import Colors from "./constants/Colors";
 
 const fetchFonts = () => {
@@ -37,6 +38,24 @@ function ProfileStackScreen() {
   );
 }
 
+const FeedStack = createNativeStackNavigator();
+
+function FeedStackScreen() {
+  return (
+    <FeedStack.Navigator>
+      <FeedStack.Screen
+        name='Feed'
+        component={FeedScreen}
+        options={{
+          title: 'Ranger', headerTintColor: Colors.text, headerStyle: {
+            backgroundColor: Colors.primary
+          }
+        }}
+      />
+    </FeedStack.Navigator>
+  )
+}
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -44,7 +63,7 @@ export default function App() {
 
   if (!fontLoaded) {
     return (
-      <AppLoading 
+      <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
         onError={err => console.log(err)}
@@ -56,20 +75,38 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <Tab.Navigator screenOptions={{ tabBarActiveBackgroundColor: Colors.primary }}>
+        <Tab.Navigator>
+        <Tab.Screen
+            name="FeedStack"
+            component={FeedStackScreen}
+            options={{
+              headerShown: false,
+              title: 'Home',
+              tabBarIcon: ({color}) => (
+                <Ionicons name="albums" size={29} style={{color: color}} />
+              ),
+              tabBarActiveTintColor: 'lightgrey',
+              tabBarInactiveTintColor: 'grey',
+              tabBarStyle: {
+                backgroundColor: '#4d4d4d',
+                borderTopColor: '#4d4d4d',
+              },
+            }}
+          />
           <Tab.Screen
             name="ProfileStack"
             component={ProfileStackScreen}
             options={{
               headerShown: false,
               title: "Profile",
-              tabBarIcon: () => (
-                <Ionicons name="person-circle-outline" size={22} color='lightgrey' />
+              tabBarIcon: ({color}) => (
+                <Ionicons name="person-circle-outline" size={29} color={color} />
               ),
-              tabBarActiveTintColor: Colors.text,
-              // tabBarActiveBackgroundColor: Colors.primary,
+              tabBarActiveTintColor: 'lightgrey',
+              tabBarInactiveTintColor: 'grey',
               tabBarStyle: {
-                backgroundColor: Colors.primary
+                backgroundColor: '#4d4d4d',
+                borderTopColor: '#4d4d4d'
               }
             }}
           />

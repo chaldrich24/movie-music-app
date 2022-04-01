@@ -8,24 +8,24 @@ import {
 } from "react-native";
 import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 
-import MainProfileTab from "../profile/tabs/MainProfileTab";
+import MovieTab from "../profile/tabs/MovieTab";
 import FavoritesTab from "../profile/tabs/FavoritesTab";
-import WatchlistTab from "../profile/tabs/WatchlistTab";
+import MusicTab from "../profile/tabs/MusicTab";
 import RegularText from "../components/text/RegularText";
 import BoldText from "../components/text/BoldText";
 import Colors from "../constants/Colors";
 
 const ProfileScreen = (props) => {
-    const [activeTab, setActiveTab] = useState('MainProfileTab');
+    const [activeTab, setActiveTab] = useState('MovieTab');
 
     let Content;
 
-    if (activeTab === 'Watchlist') {
-        Content = WatchlistTab;
+    if (activeTab === 'MusicTab') {
+        Content = MusicTab;
     } else if (activeTab === 'Favorites') {
         Content = FavoritesTab;
     } else {
-        Content = MainProfileTab;
+        Content = MovieTab;
     }
 
     const setActiveTabHandler = (tab, event) => {
@@ -52,17 +52,17 @@ const ProfileScreen = (props) => {
                 </View>
             </View>
             <View style={styles.profileTabs}>
-                <TouchableOpacity style={(activeTab == 'MainProfileTab') ? {...styles.active, ...styles.profileTabIcon} : styles.profileTabIcon}  onPress={setActiveTabHandler.bind(this, 'MainProfileTab')}>
+                <TouchableOpacity style={(activeTab == 'MovieTab') ? { ...styles.active, ...styles.profileTabIcon } : styles.profileTabIcon} onPress={setActiveTabHandler.bind(this, 'MovieTab')}>
                     <View>
                         <MaterialCommunityIcons style={{ textAlign: 'center' }} name="movie-open" size={24} color="black" />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={(activeTab == 'Watchlist') ? {...styles.active, ...styles.profileTabIcon} : styles.profileTabIcon} onPress={setActiveTabHandler.bind(this, 'Watchlist')}>
+                <TouchableOpacity style={(activeTab == 'MusicTab') ? { ...styles.active, ...styles.profileTabIcon } : styles.profileTabIcon} onPress={setActiveTabHandler.bind(this, 'MusicTab')}>
                     <View >
-                    <MaterialCommunityIcons style={{ textAlign: 'center' }} name="music" size={24} color="black" />
+                        <MaterialCommunityIcons style={{ textAlign: 'center' }} name="music" size={24} color="black" />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={(activeTab == 'Favorites') ? {...styles.active, ...styles.profileTabIcon} : styles.profileTabIcon}  onPress={setActiveTabHandler.bind(this, 'Favorites')}>
+                <TouchableOpacity style={(activeTab == 'Favorites') ? { ...styles.active, ...styles.profileTabIcon } : styles.profileTabIcon} onPress={setActiveTabHandler.bind(this, 'Favorites')}>
                     <View>
                         <Entypo style={{ textAlign: 'center' }} name="heart" size={24} color="black" />
                     </View>
@@ -126,16 +126,18 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#d6d6d6',
-        borderRightWidth: 1,
-        borderRightColor: '#d6d6d6',
-        borderLeftWidth: 1,
-        borderLeftColor: '#d6d6d6',
-        marginTop: 1
+        borderBottomColor: Colors.secondary,
+       
+        marginTop: 1,
+        backgroundColor: Colors.primary
     },
     profileTabIcon: {
         flex: 1,
-        padding: 10
+        padding: 10,
+        borderRightWidth: .25,
+        borderRightColor: 'rgba(166, 166, 166,0.1)',
+        borderLeftWidth: .25,
+        borderLeftColor: 'lightgrey',
     },
     active: {
         backgroundColor: '#e8e8e8',

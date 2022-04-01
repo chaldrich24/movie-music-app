@@ -7,7 +7,7 @@ import Colors from "../constants/Colors";
 const List = props => {
     return (
         <View style={styles.list}>
-            <RegularText style={styles.title}>My Ranger Elites</RegularText>
+            <RegularText style={styles.title}>{props.title}</RegularText>
             <View style={styles.listImages}>
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={{
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
     },
 });
 

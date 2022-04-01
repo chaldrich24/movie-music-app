@@ -1,15 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 
-import RegularText from "../../components/text/RegularText";
 import Colors from "../../constants/Colors";
 import List from '../../components/List';
 
-const MainProfileTab = (props) => {
+const MusicTab = (props) => {
     return (
         <View style={styles.main}>
             <ScrollView contentContainerStyle={{ flex: 1, width: '100%', alignItems: 'center' }}>
-                <List />
+                <List title='Top Albums' />
             </ScrollView>
         </View>
     )
@@ -25,4 +24,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default MainProfileTab;
+export default MusicTab;
