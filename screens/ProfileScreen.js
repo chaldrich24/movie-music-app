@@ -6,22 +6,31 @@ import {
     StyleSheet,
     TouchableOpacity
 } from "react-native";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, MaterialCommunityIcons } from "@expo/vector-icons";
 
-import ProfileDigs from "../components/ProfileDigs";
-import Watchlist from "../components/Watchlist";
-import Favorites from "../components/Favorites";
+import MainProfileTab from "../profile/tabs/MainProfileTab";
+import FavoritesTab from "../profile/tabs/FavoritesTab";
+import WatchlistTab from "../profile/tabs/WatchlistTab";
+import RegularText from "../components/text/RegularText";
+import BoldText from "../components/text/BoldText";
+import Colors from "../constants/Colors";
 
 const ProfileScreen = (props) => {
-    const [activeTab, setActiveTab] = useState('ProfileDigs');
+    const [activeTab, setActiveTab] = useState('MainProfileTab');
+
     let Content;
 
     if (activeTab === 'Watchlist') {
-        Content = Watchlist;
+        Content = WatchlistTab;
     } else if (activeTab === 'Favorites') {
-        Content = Favorites;
+        Content = FavoritesTab;
     } else {
-        Content = ProfileDigs;
+        Content = MainProfileTab;
+    }
+
+    const setActiveTabHandler = (tab, event) => {
+        setActiveTab(tab);
+        event.target.backgroundColor = 'black';
     }
 
     return (
@@ -36,24 +45,24 @@ const ProfileScreen = (props) => {
                     />
                 </View>
                 <View style={styles.profileInfo}>
-                    <Text style={styles.username}>Solid</Text>
-                    <Text style={styles.bio}>
+                    <BoldText style={styles.username}>Solid</BoldText>
+                    <RegularText style={styles.bio}>
                         "If only I had something that could show who I really am"
-                    </Text>
+                    </RegularText>
                 </View>
             </View>
             <View style={styles.profileTabs}>
-                <TouchableOpacity style={styles.profileTabIcon} onPress={() => {setActiveTab('ProfileDigs')}}>
+                <TouchableOpacity style={(activeTab == 'MainProfileTab') ? {...styles.active, ...styles.profileTabIcon} : styles.profileTabIcon}  onPress={setActiveTabHandler.bind(this, 'MainProfileTab')}>
                     <View>
-                        <Entypo style={{ textAlign: 'center' }} name="feather" size={24} color="black" />
+                        <MaterialCommunityIcons style={{ textAlign: 'center' }} name="movie-open" size={24} color="black" />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ ...styles.profileTabIcon, ...{ borderRightWidth: 1, borderLeftWidth: 1 } }} onPress={() => {setActiveTab('Watchlist')}}>
+                <TouchableOpacity style={(activeTab == 'Watchlist') ? {...styles.active, ...styles.profileTabIcon} : styles.profileTabIcon} onPress={setActiveTabHandler.bind(this, 'Watchlist')}>
                     <View >
-                        <Entypo style={{ textAlign: 'center' }} name="eye" size={24} color="black" />
+                    <MaterialCommunityIcons style={{ textAlign: 'center' }} name="music" size={24} color="black" />
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.profileTabIcon} onPress={() => {setActiveTab('Favorites')}}>
+                <TouchableOpacity style={(activeTab == 'Favorites') ? {...styles.active, ...styles.profileTabIcon} : styles.profileTabIcon}  onPress={setActiveTabHandler.bind(this, 'Favorites')}>
                     <View>
                         <Entypo style={{ textAlign: 'center' }} name="heart" size={24} color="black" />
                     </View>
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
         height: "100%",
     },
     profileInfoContainer: {
-        backgroundColor: "#8DA9C4",
+        backgroundColor: Colors.secondary,
         flexDirection: "row",
         padding: 20,
         width: "100%",
@@ -115,11 +124,21 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        borderBottomWidth: 1
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: '#d6d6d6',
+        borderRightWidth: 1,
+        borderRightColor: '#d6d6d6',
+        borderLeftWidth: 1,
+        borderLeftColor: '#d6d6d6',
+        marginTop: 1
     },
     profileTabIcon: {
         flex: 1,
         padding: 10
+    },
+    active: {
+        backgroundColor: '#e8e8e8',
     }
 });
 
