@@ -1,38 +1,44 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 
 import RegularText from "./text/RegularText";
 import Colors from "../constants/Colors";
 
+const { height, width } = Dimensions.get('window');
+
 const List = props => {
+
+    const userListData = props.data;
+    let listContents;
+    let imageContainer;
+
+    if (props.type === 'movie') {
+        listContents = props.movies;
+        imageContainer = styles.movieImageContainer;
+    } else {
+        listContents = props.music;
+        imageContainer = styles.musicImageContainer;
+    }
+
     return (
-        <View style={styles.list}>
-            <RegularText style={styles.title}>{props.title}</RegularText>
-            <View style={styles.listImages}>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{
-                        uri: 'https://cdn.shopify.com/s/files/1/1057/4964/products/stalker-vintage-movie-poster-original-32x42.jpg?v=1614632596',
-                    }} />
-                </View>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{
-                        uri: 'https://cdn.shopify.com/s/files/1/1057/4964/products/stalker-vintage-movie-poster-original-32x42.jpg?v=1614632596',
-                    }} />
-                </View>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{
-                        uri: 'https://cdn.shopify.com/s/files/1/1057/4964/products/stalker-vintage-movie-poster-original-32x42.jpg?v=1614632596',
-                    }} />
-                </View>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{
-                        uri: 'https://cdn.shopify.com/s/files/1/1057/4964/products/stalker-vintage-movie-poster-original-32x42.jpg?v=1614632596',
-                    }} />
-                </View>
-                <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={{
-                        uri: 'https://cdn.shopify.com/s/files/1/1057/4964/products/stalker-vintage-movie-poster-original-32x42.jpg?v=1614632596',
-                    }} />
+        <View style={styles.screen}>
+            <View style={styles.list}>
+                <RegularText style={styles.title}>{props.title}</RegularText>
+                <View style={styles.listImages}>
+                    {
+                        userListData.map(item => {
+                            const id = item.id
+                            return (
+                                <View 
+                                key={id}
+                                style={imageContainer}>
+                                    <Image style={styles.image} source={{
+                                        uri: listContents[id - 1].imageUrl,
+                                    }} />
+                                </View>
+                            )
+                        })
+                    }
                 </View>
             </View>
         </View>
@@ -41,13 +47,26 @@ const List = props => {
 };
 
 const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        alignItems: 'center',
+        width: width
+    },
     image: {
         height: '100%',
         width: '100%'
     },
-    imageContainer: {
+    movieImageContainer: {
         width: 66,
         height: 100,
+        shadowColor: 'black',
+        shadowOffset: { width: 2, height: 2 },
+        shadowRadius: 2,
+        shadowOpacity: .85
+    },
+    musicImageContainer: {
+        width: 66,
+        height: 66,
         shadowColor: 'black',
         shadowOffset: { width: 2, height: 2 },
         shadowRadius: 2,
@@ -56,7 +75,7 @@ const styles = StyleSheet.create({
     list: {
         alignItems: 'center',
         justifyContent: 'space-around',
-        height: 150,
+        height: height / 6,
         width: '90%',
         borderWidth: 1,
         borderColor: 'lightgrey',

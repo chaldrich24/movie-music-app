@@ -14,10 +14,11 @@ import MusicTab from "../profile/tabs/MusicTab";
 import RegularText from "../components/text/RegularText";
 import BoldText from "../components/text/BoldText";
 import Colors from "../constants/Colors";
+import data from '../data/mockData';
 
 const ProfileScreen = (props) => {
     const [activeTab, setActiveTab] = useState('MovieTab');
-
+    console.log(data)
     let Content;
 
     if (activeTab === 'MusicTab') {
@@ -68,7 +69,7 @@ const ProfileScreen = (props) => {
                     </View>
                 </TouchableOpacity>
             </View>
-            <Content />
+            <Content data={data} />
         </View>
     );
 };
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         alignItems: "center",
+        width: '100%'
     },
     profilePicContainer: {
         width: 150,

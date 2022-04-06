@@ -8,7 +8,7 @@ const MovieTab = (props) => {
     return (
         <View style={styles.main}>
             <ScrollView contentContainerStyle={{ flex: 1, width: '100%', alignItems: 'center' }}>
-                <List title='Top Picks' />
+                <List data={props.data.users[0].movies.top} movies={props.data.movies} title='Top Picks' type='movie' />
             </ScrollView>
         </View>
     )

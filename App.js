@@ -13,6 +13,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import FeedScreen from "./screens/FeedScreen";
 import Colors from "./constants/Colors";
 
+
 const fetchFonts = () => {
   return Font.loadAsync({
     'regular': require('./assets/fonts/JosefinSans-Medium.ttf'),

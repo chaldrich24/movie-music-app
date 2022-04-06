@@ -8,7 +8,7 @@ const MusicTab = (props) => {
     return (
         <View style={styles.main}>
             <ScrollView contentContainerStyle={{ flex: 1, width: '100%', alignItems: 'center' }}>
-                <List title='Top Albums' />
+                <List title='Top Albums' type='music' data={props.data.users[0].music.top} music={props.data.music} />
             </ScrollView>
         </View>
     )
