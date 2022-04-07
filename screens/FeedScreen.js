@@ -1,11 +1,29 @@
-import React, {useRef, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, FlatList, Dimensions } from 'react-native';
+import axios from 'axios';
 
-import data from '../data/mockData';
 import BoldText from '../components/text/BoldText';
 
 const FeedScreen = props => {
-    console.log(data.movies);
+    const current = new Date();
+    const [movieData, setMovieData] = useState();
+    const movieImageStartUrl = 'https://image.tmdb.org/t/p/original'
+
+    useEffect(() => {
+        getMovies();
+    }, []);
+
+    const getMovies = () => {
+        const url = 'https://api.themoviedb.org/3/movie/top_rated?api_key=3a16dbd686603ddc46bf3c7b14671c2b&language=en-US&page=2';
+
+        axios.get(url)
+            .then((res) => {
+                console.log(`Pulling data at ${current.getHours()}:${current.getMinutes()}.${current.getSeconds()}`);
+                setMovieData(res.data.results);
+            })
+    }
+
+
 
     const renderItem = ({ item }) => {
 
@@ -16,7 +34,7 @@ const FeedScreen = props => {
                 </View>
                 <View style={styles.postContent}>
                     <View style={styles.image}>
-                        <Image style={{ width: '100%', height: '100%' }} source={{ uri: item.imageUrl }} />
+                        <Image style={{ width: '100%', height: '100%' }} source={{ uri: `${movieImageStartUrl}${item.poster_path}`}} />
                     </View>
                     <BoldText style={styles.postItemTitle}>{item.title}</BoldText>
                 </View>
@@ -29,7 +47,8 @@ const FeedScreen = props => {
             <FlatList
                 style={{ width: '100%', }}
                 contentContainerStyle={{ alignItems: 'center', }}
-                data={data.movies} renderItem={renderItem}
+                data={movieData} 
+                renderItem={renderItem}
                 keyExtractor={item => item.id}
                 snapToAlignment='center'
                 snapToInterval={Dimensions.get('window').height * .82}
@@ -61,11 +80,14 @@ const styles = StyleSheet.create({
     postContent: {
         width: '100%',
         flexBasis: '95%',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     user: {
         flexBasis: '5%',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        alignItems: 'flex-start',
+        width: '100%'
     },
     postItemTitle: {
         fontSize: 23,

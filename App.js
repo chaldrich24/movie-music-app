@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from 'react';
+import React, { useState, setState } from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import * as Font from 'expo-font'
 import AppLoading from "expo-app-loading";
+import axios from 'axios';
 
 import ProfileScreen from "./screens/ProfileScreen";
 import FeedScreen from "./screens/FeedScreen";
@@ -77,14 +78,14 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Tab.Navigator>
-        <Tab.Screen
+          <Tab.Screen
             name="FeedStack"
             component={FeedStackScreen}
             options={{
               headerShown: false,
               title: 'Home',
-              tabBarIcon: ({color}) => (
-                <Ionicons name="albums" size={29} style={{color: color}} />
+              tabBarIcon: ({ color }) => (
+                <Ionicons name="albums" size={29} style={{ color: color }} />
               ),
               tabBarActiveTintColor: 'lightgrey',
               tabBarInactiveTintColor: 'grey',
@@ -100,7 +101,7 @@ export default function App() {
             options={{
               headerShown: false,
               title: "Profile",
-              tabBarIcon: ({color}) => (
+              tabBarIcon: ({ color }) => (
                 <Ionicons name="person-circle-outline" size={29} color={color} />
               ),
               tabBarActiveTintColor: 'lightgrey',
